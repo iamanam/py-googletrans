@@ -73,6 +73,7 @@ class Translator(object):
             text = text.decode('utf-8')
 
         token = self.token_acquirer.do(text)
+        print(token)
         params = utils.build_params(query=text, src=src, dest=dest,
                                     token=token)
         url = urls.TRANSLATE.format(host=self._pick_service_url())
