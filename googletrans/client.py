@@ -54,7 +54,8 @@ class Translator(object):
             self.session.mount('http://', TimeoutAdapter(timeout))
 
         self.service_urls = service_urls or ['translate.google.com']
-        self.token_acquirer = TokenAcquirer(session=self.session, host=self.service_urls[0])
+        self.token_acquirer = TokenAcquirer(
+            session=self.session, host=self.service_urls[0])
 
         # Use HTTP2 Adapter if hyper is installed
         try:  # pragma: nocover
@@ -73,7 +74,6 @@ class Translator(object):
             text = text.decode('utf-8')
 
         token = self.token_acquirer.do(text)
-        print(token)
         params = utils.build_params(query=text, src=src, dest=dest,
                                     token=token)
         url = urls.TRANSLATE.format(host=self._pick_service_url())
@@ -100,7 +100,8 @@ class Translator(object):
         extra = {}
 
         for index, category in response_parts_name_mapping.items():
-            extra[category] = data[index] if (index < len(data) and data[index]) else None
+            extra[category] = data[index] if (
+                index < len(data) and data[index]) else None
 
         return extra
 
